@@ -143,7 +143,7 @@ app.post('/generate-strm', (req, res) => {
 
 // 下载图片的 API
 app.post('/download-image', async (req, res) => {
-    const { dirName, imageUrl, imageName, jav } = req.body; // 从请求体中获取目录名称、图片 URL、图片名称和 jav 参数
+    const { dirName, imageUrl, imageName } = req.body; // 从请求体中获取目录名称、图片 URL、图片名称和 jav 参数
     if (!dirName || !imageUrl || !imageName) {
         return res.status(400).send('目录名称、图片 URL 或图片名称不能为空');
     }
@@ -157,7 +157,7 @@ app.post('/download-image', async (req, res) => {
 
     try {
         let response;
-        if (jav === 'javbus') {
+        if (imageUrl.includes('javbus')) {
             // 如果 jav 参数等于 'javbus'，则使用代理下载图片
             const proxyAgent = new HttpsProxyAgent('http://127.0.0.1:7890'); // 使用 HTTP 代理
             response = await axios.get(imageUrl, {
